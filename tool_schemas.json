@@ -1,0 +1,186 @@
+{
+  "note": "ngrok free URLs can change after restart. Update request_url values in Vapi if the tunnel changes.",
+  "tools": [
+    {
+      "name": "verify_customer",
+      "type": "apiRequest",
+      "method": "POST",
+      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/verify-customer",
+      "description": "Mandatory identity verification tool. Call immediately after full_name, date_of_birth, and phone_last4 are collected. Never claim verification is complete without this tool.",
+      "request_body_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "full_name": {
+            "type": "string",
+            "description": "Customer's full name."
+          },
+          "date_of_birth": {
+            "type": "string",
+            "description": "Date of birth in YYYY-MM-DD format."
+          },
+          "phone_last4": {
+            "type": "string",
+            "description": "Last four digits of registered phone number."
+          }
+        },
+        "required": [
+          "full_name",
+          "date_of_birth",
+          "phone_last4"
+        ]
+      },
+      "response_body": {
+        "verified": "boolean",
+        "auth_token": "string",
+        "message": "string"
+      }
+    },
+    {
+      "name": "get_account_details",
+      "type": "apiRequest",
+      "method": "POST",
+      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/account-details",
+      "description": "Retrieve account details only after verify_customer returns verified=true. Pass the exact auth_token returned by verify_customer.",
+      "request_body_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "auth_token": {
+            "type": "string",
+            "description": "Exact authentication token returned by verify_customer."
+          }
+        },
+        "required": [
+          "auth_token"
+        ]
+      },
+      "response_body": {
+        "customer_name": "string",
+        "loan_type": "string",
+        "overdue_emi": "number",
+        "days_past_due": "number"
+      }
+    },
+    {
+      "name": "log_promise_to_pay",
+      "type": "apiRequest",
+      "method": "POST",
+      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/promise-to-pay",
+      "description": "Log an explicit promise-to-pay after successful verification and after amount and date are confirmed.",
+      "request_body_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "auth_token": {
+            "type": "string"
+          },
+          "customer_name": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "ptp_date": {
+            "type": "string",
+            "description": "YYYY-MM-DD"
+          }
+        },
+        "required": [
+          "auth_token",
+          "customer_name",
+          "amount",
+          "ptp_date"
+        ]
+      },
+      "response_body": {
+        "success": "boolean",
+        "message": "string",
+        "promise": "object"
+      }
+    },
+    {
+      "name": "send_payment_link",
+      "type": "apiRequest",
+      "method": "POST",
+      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/send-payment-link",
+      "description": "Send a mock payment link after verification and customer consent.",
+      "request_body_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "auth_token": {
+            "type": "string"
+          },
+          "customer_name": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "auth_token",
+          "customer_name",
+          "phone_number",
+          "amount"
+        ]
+      },
+      "response_body": {
+        "success": "boolean",
+        "message": "string",
+        "channel": "string",
+        "phone_number": "string",
+        "amount": "number",
+        "payment_link": "string"
+      }
+    },
+    {
+      "name": "mark_disposition",
+      "type": "apiRequest",
+      "method": "POST",
+      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/mark-disposition",
+      "description": "Log the final call outcome before ending the call.",
+      "request_body_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "customer_name": {
+            "type": "string"
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "promise_to_pay",
+              "already_paid",
+              "do_not_call",
+              "wrong_person",
+              "dispute",
+              "hardship",
+              "callback_requested",
+              "hostile",
+              "no_response"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_name",
+          "disposition"
+        ]
+      },
+      "response_body": {
+        "success": "boolean",
+        "message": "string",
+        "disposition": "string",
+        "customer_name": "string",
+        "notes": "string"
+      }
+    }
+  ]
+}
