@@ -10,11 +10,11 @@ app = FastAPI(
 
 # Mock customer database
 CUSTOMERS = {
-
     "rahul-sharma": {
         "full_name": "Rahul Sharma",
         "date_of_birth": "1998-05-12",
         "phone_last4": "4321",
+        "phone_number": "9876544321",
         "verified": False,
         "loan_type": "Personal Loan",
         "overdue_emi": 8499,
@@ -165,7 +165,6 @@ def send_payment_link(data: PaymentLinkRequest):
         "amount": data.amount,
         "payment_link": mock_payment_link
     }
-
 
 @app.post("/mark-disposition")
 def mark_disposition(data: DispositionRequest):
