@@ -1,11 +1,11 @@
 {
-  "note": "https://anatomist-timid-opossum.ngrok-free.dev",
+  "note": "Production backend is deployed on Render. Vapi API Request tools use the Render service URL.",
   "tools": [
     {
       "name": "verify_customer",
       "type": "apiRequest",
       "method": "POST",
-      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/verify-customer",
+      "request_url": "https://kapture-finance-voice-agent.onrender.com/verify-customer",
       "description": "Mandatory identity verification tool. Call immediately after full_name, date_of_birth, and phone_last4 are collected. Never claim verification is complete without this tool.",
       "request_body_schema": {
         "type": "object",
@@ -40,7 +40,7 @@
       "name": "get_account_details",
       "type": "apiRequest",
       "method": "POST",
-      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/account-details",
+      "request_url": "https://kapture-finance-voice-agent.onrender.com/account-details",
       "description": "Retrieve account details only after verify_customer returns verified=true. Pass the exact auth_token returned by verify_customer.",
       "request_body_schema": {
         "type": "object",
@@ -66,7 +66,7 @@
       "name": "log_promise_to_pay",
       "type": "apiRequest",
       "method": "POST",
-      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/promise-to-pay",
+      "request_url": "https://kapture-finance-voice-agent.onrender.com/promise-to-pay",
       "description": "Log an explicit promise-to-pay after successful verification and after amount and date are confirmed.",
       "request_body_schema": {
         "type": "object",
@@ -103,7 +103,7 @@
       "name": "send_payment_link",
       "type": "apiRequest",
       "method": "POST",
-      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/send-payment-link",
+      "request_url": "https://kapture-finance-voice-agent.onrender.com/send-payment-link",
       "description": "Send a mock payment link after verification and customer consent.",
       "request_body_schema": {
         "type": "object",
@@ -142,7 +142,7 @@
       "name": "mark_disposition",
       "type": "apiRequest",
       "method": "POST",
-      "request_url": "https://anatomist-timid-opossum.ngrok-free.dev/mark-disposition",
+      "request_url": "https://kapture-finance-voice-agent.onrender.com/mark-disposition",
       "description": "Log the final call outcome before ending the call.",
       "request_body_schema": {
         "type": "object",
