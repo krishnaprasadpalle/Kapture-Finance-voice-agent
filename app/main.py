@@ -41,7 +41,6 @@ class PromiseToPayRequest(BaseModel):
 class PaymentLinkRequest(BaseModel):
     auth_token: str
     customer_name: str
-    phone_number: str
     amount: float
 
 
