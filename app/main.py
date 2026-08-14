@@ -10,6 +10,7 @@ app = FastAPI(
 
 # Mock customer database
 CUSTOMERS = {
+
     "rahul-sharma": {
         "full_name": "Rahul Sharma",
         "date_of_birth": "1998-05-12",
@@ -153,13 +154,15 @@ def send_payment_link(data: PaymentLinkRequest):
             detail="Valid customer verification required"
         )
 
+    customer = CUSTOMERS[session["customer_id"]]
+
     mock_payment_link = "https://pay.kapturefinance.mock/rahul-sharma"
 
     return {
         "success": True,
         "message": "Payment link sent successfully",
         "channel": "SMS",
-        "phone_number": data.phone_number,
+        "phone_number": customer["phone_number"],
         "amount": data.amount,
         "payment_link": mock_payment_link
     }
