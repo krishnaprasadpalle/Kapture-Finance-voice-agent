@@ -66,7 +66,7 @@ ngrok http 8000
 
 Current prototype URL used during the build:
 ```text
-https://anatomist-timid-opossum.ngrok-free.dev
+https://kapture-finance-voice-agent.onrender.com
 ```
 
 > Important: free ngrok URLs can change after restart. If the URL changes, update every Vapi API Request tool.
