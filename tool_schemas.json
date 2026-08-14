@@ -1,5 +1,5 @@
 {
-  "note": "ngrok free URLs can change after restart. Update request_url values in Vapi if the tunnel changes.",
+  "note": "https://anatomist-timid-opossum.ngrok-free.dev",
   "tools": [
     {
       "name": "verify_customer",
